@@ -6,14 +6,25 @@ from kivy.properties import ObjectProperty
 from kivy.network.urlrequest import UrlRequest 
 import json
 from kivy.uix.listview import ListItemButton
+from kivy.factory import Factory
 
 API_KEY = "ebdb10f67989131d05caadb1d21f7754"	# You should get your own
 
 class WeatherRoot(BoxLayout):
-	pass
+	def show_current_weather(self, location):
+		print("Entered show_current_weather method of WeatherRoot")
+		self.clear_widgets()
+		current_weather = Factory.CurrentWeather()
+		current_weather.location = location
+		self.add_widget(current_weather)
+		print("Location picked: {}".format(location))
+	
+
 
 class LocationButton(ListItemButton):
 	pass
+	
+	
 
 class AddLocationForm(BoxLayout):
 	search_input = ObjectProperty()	#Property of text box
