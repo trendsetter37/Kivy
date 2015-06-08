@@ -14,18 +14,18 @@ class WeatherRoot(BoxLayout):
 	def show_current_weather(self, location):
 		print("Entered show_current_weather method of WeatherRoot")
 		self.clear_widgets()
-		current_weather = Factory.CurrentWeather()
+		current_weather = Factory.CurrentWeather() # Dynamic class defined in weather.kv file
 		current_weather.location = location
 		self.add_widget(current_weather)
 		print("Location picked: {}".format(location))
-	
 
+	def show_add_location_form(self):
+		self.clear_widgets()
+		self.add_widget(AddLocationForm())	
 
 class LocationButton(ListItemButton):
 	pass
 	
-	
-
 class AddLocationForm(BoxLayout):
 	search_input = ObjectProperty()	#Property of text box
 	search_results = ObjectProperty()
@@ -36,14 +36,15 @@ class AddLocationForm(BoxLayout):
 		print(self.check_box.active)
 		global API_KEY
 
-
 		search_template = "http://api.openweathermap.org/data/2.5/" + \
 		"find?q={}&type=like&APPID=" + API_KEY
+
 		search_url = search_template.format(self.search_input.text)
 
 		request = UrlRequest(search_url, self.found_location,
 							 on_error=self.received_error,
 							 on_failure=self.received_failure)		# The second parameter is the response method
+
 		print("User searched for {}".format(self.search_input.text))
 
 	def found_location(self, request, data):
@@ -51,7 +52,6 @@ class AddLocationForm(BoxLayout):
 		print("entered found_loacation method")
 		cities = ["{} ({})".format(d['name'], d['sys']['country'])
 			for d in data['list']]
-
 
 		print("\n".join(cities))  # Make this current with new api
 		#And now we will update our list

@@ -2,13 +2,10 @@
 #: import main main
 #: import ListAdapter kivy.adapters.listadapter.ListAdapter
 
-
 WeatherRoot:
 
 <WeatherRoot>:
 	AddLocationForm
-
-
 
 <AddLocationForm>: 
 
@@ -16,6 +13,7 @@ WeatherRoot:
 	search_results: search_results_list
 	search_input: search_box # Use id and connect to property from main.py
 	check_box: ch_box
+
 	BoxLayout:
 		height: "40dp"
 		size_hint_y: None
@@ -32,8 +30,7 @@ WeatherRoot:
 			size_hint_x: 10
 			Label:
 				text: "GPS"
-				
-					
+							
 			CheckBox:
 				id: ch_box
 				active: False
@@ -51,7 +48,6 @@ WeatherRoot:
 		adapter:
 			ListAdapter(data=[], cls=main.LocationButton)
 
-
 <CurrentWeather@BoxLayout>:
 	location: ""
 	conditions: None
@@ -67,10 +63,10 @@ WeatherRoot:
 		height: "40dp"
 		Button:
 			text: "Add Location"
+			on_press: app.root.show_add_location_form()
 		Button:
 			text: "Forecast"
 
 <LocationButton>:
-
 	on_press: app.root.show_current_weather(self.text)
 		
