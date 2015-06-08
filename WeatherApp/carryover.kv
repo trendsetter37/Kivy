@@ -1,0 +1,38 @@
+<AddLocationForm>: 
+		orientation: "vertical"
+		search_results: search_results_list
+		search_input: search_box # Use id and connect to property from main.py
+		check_box: ch_box
+		BoxLayout:
+			height: "40dp"
+			size_hint_y: None
+			
+			TextInput:
+				id: search_box 	# set id to be refenced elsewhere in kvlang file
+				size_hint_x: 50
+				multiline: False
+				hint_text: "Enter a city"
+				on_text_validate: root.search_location()
+			
+			BoxLayout:
+				orientation: "vertical"
+				size_hint_x: 10
+
+				Label:
+					text: "GPS"
+					
+					
+				CheckBox:
+					id: ch_box
+					active: False
+					
+			Button:
+				text: "Search"
+				size_hint_x: 20
+				on_press: root.search_location()	# event handler on press/click
+			Button:
+				text: "Current Location"
+				size_hint_x: 20
+		ListView:
+			id: search_results_list
+			item_strings: []
