@@ -11,13 +11,17 @@ from kivy.factory import Factory
 API_KEY = "ebdb10f67989131d05caadb1d21f7754"	# You should get your own
 
 class WeatherRoot(BoxLayout):
-	def show_current_weather(self, location):
-		print("Entered show_current_weather method of WeatherRoot")
+	current_weather = ObjectProperty()
+	def show_current_weather(self, location=None):
+		
 		self.clear_widgets()
-		current_weather = Factory.CurrentWeather() # Dynamic class defined in weather.kv file
-		current_weather.location = location
-		self.add_widget(current_weather)
-		print("Location picked: {}".format(location))
+		if location == None and self.current_weather is None:
+			location = "New York (US)"
+		if location is not None:
+			self.current_weather = Factory.CurrentWeather() # Dynamic class defined in weather.kv file
+			self.current_weather.location = location
+		self.add_widget(self.current_weather)
+		
 
 	def show_add_location_form(self):
 		self.clear_widgets()

@@ -14,6 +14,7 @@ WeatherRoot:
 	search_input: search_box # Use id and connect to property from main.py
 	check_box: ch_box
 
+
 	BoxLayout:
 		height: "40dp"
 		size_hint_y: None
@@ -22,6 +23,7 @@ WeatherRoot:
 			id: search_box 	# set id to be refenced elsewhere in kvlang file
 			size_hint_x: 50
 			multiline: False
+			focus: True
 			hint_text: "Enter a city"
 			on_text_validate: root.search_location()
 			
@@ -47,6 +49,11 @@ WeatherRoot:
 		id: search_results_list
 		adapter:
 			ListAdapter(data=[], cls=main.LocationButton)
+	Button:
+		text: "Cancel"
+		height: "40dp"
+		size_hint_y: None
+		on_press: app.root.show_current_weather(None)
 
 <CurrentWeather@BoxLayout>:
 	location: ""
@@ -55,8 +62,20 @@ WeatherRoot:
 	temp_min: None
 	temp_max: None
 	orientation: "vertical"
-	Label:
-		text: root.location
+	
+	BoxLayout:
+		orientation: "vertical"
+		BoxLayout:
+			Label:
+				text: root.location
+			Label:
+				text: "Current Temp"
+		BoxLayout:
+			Label:
+				text: "High / Low"
+			Label:
+				text:"Current Conditions"
+	
 	BoxLayout:
 		orientation: "horizontal"
 		size_hint_y: None
