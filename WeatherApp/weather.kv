@@ -48,9 +48,7 @@ WeatherRoot:
 	ListView:
 		id: search_results_list
 		adapter:
-			ListAdapter(data=[],
-					    cls=main.LocationButton,
-					    args_converter=root.args_converter) # root refers to AddLocationForm
+			ListAdapter(data=[],cls=main.LocationButton,args_converter=root.args_converter) # root refers to AddLocationForm
 	Button:
 		text: "Cancel"
 		height: "40dp"

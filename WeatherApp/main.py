@@ -16,7 +16,7 @@ class WeatherRoot(BoxLayout):
 		
 		self.clear_widgets()
 		if location == None and self.current_weather is None:
-			location = "New York (US)"
+			location = ("New Your", "US")
 		if location is not None:
 			self.current_weather = Factory.CurrentWeather() # Dynamic class defined in weather.kv file
 			self.current_weather.location = location
@@ -28,7 +28,7 @@ class WeatherRoot(BoxLayout):
 		self.add_widget(AddLocationForm())	
 
 class LocationButton(ListItemButton):
-	location = LocationProperty()
+	location = ListProperty()
 	
 	
 class AddLocationForm(BoxLayout):
