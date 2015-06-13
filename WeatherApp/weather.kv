@@ -55,26 +55,25 @@ WeatherRoot:
 		size_hint_y: None
 		on_press: app.root.show_current_weather(None)
 
-<CurrentWeather@BoxLayout>:
-	location: ['New York', 'US']
-	conditions: None
-	temp: None
-	temp_min: None
-	temp_max: None
+<CurrentWeather>:
+	
 	orientation: "vertical"
 	
 	BoxLayout:
-		orientation: "vertical"
-		BoxLayout:
-			Label:
-				text: "{} ({})".format(root.location[0], root.location[1])
-			Label:
-				text: "Current Temp"
-		BoxLayout:
-			Label:
-				text: "High / Low"
-			Label:
-				text:"Current Conditions"
+		
+	
+		Label:
+			text: "{} ({})".format(root.location[0], root.location[1])
+			font_size: "30dp"
+		Label:
+			text: "{}".format(root.temp)
+	Label:
+		text: root.conditions
+	BoxLayout:
+		Label:
+			text: "Low: {}".format(root.low_temp)
+		Label:
+			text: "High: {}".format(root.hi_temp)
 	
 	BoxLayout:
 		orientation: "horizontal"

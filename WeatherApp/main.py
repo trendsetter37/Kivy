@@ -2,11 +2,11 @@ from __future__ import print_function
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout 
 from kivy.uix.checkbox import CheckBox 
-from kivy.properties import ObjectProperty, ListProperty
+from kivy.properties import ObjectProperty, ListProperty, NumericProperty, StringProperty
 from kivy.network.urlrequest import UrlRequest 
 import json
 from kivy.uix.listview import ListItemButton
-from kivy.factory import Factory
+
 
 API_KEY = "ebdb10f67989131d05caadb1d21f7754"	# You should get your own
 
@@ -15,11 +15,11 @@ class WeatherRoot(BoxLayout):
 	def show_current_weather(self, location=None):
 		
 		self.clear_widgets()
-		if location == None and self.current_weather is None:
-			location = ("New Your", "US")
+		if self.current_weather is None:
+			self.current_weather = CurrentWeather()
 		if location is not None:
-			self.current_weather = Factory.CurrentWeather() # Dynamic class defined in weather.kv file
 			self.current_weather.location = location
+		self.current_weather.update_weather()	
 		self.add_widget(self.current_weather)
 		
 
@@ -73,6 +73,29 @@ class AddLocationForm(BoxLayout):
 		
 	def received_failure(self, request, result):
 		print("Failure: {}\nResult type: {}".format(result, type(result)))
+
+
+class CurrentWeather(BoxLayout):
+	location = ListProperty(['New York', 'US'])
+	conditions = StringProperty()
+	temp = NumericProperty()
+	hi_temp = NumericProperty()
+	low_temp = NumericProperty()
+	def update_weather(self):
+		weather_template = "http://api.openweathermap.org/data/2.5/"+\
+		"weather?q={},{}&units=metric&APPID=" + API_KEY
+		weather_url = weather_template.format(*self.location) # Unpacking tuple / list with *
+		request = UrlRequest(weather_url, self.weather_retrieved)
+
+	def weather_retrieved(self, request, data):
+		data = json.loads(data.decode()) if not isinstance(data, dict) else data
+		self.conditions = data['weather'][0]['description']
+		self.temp = data['main']['temp']
+		self.hi_temp = data['main']['temp_max']
+		self.low_temp = data['main']['temp_min']
+		print(data)
+		print("temp: {}\nhi: {}\nlow: {}".format(self.temp, self.hi_temp, self.low_temp))
+
 
 class WeatherApp(App):
 	pass
