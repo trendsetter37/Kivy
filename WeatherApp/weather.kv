@@ -59,8 +59,7 @@ WeatherRoot:
 	
 	orientation: "vertical"
 	
-	BoxLayout:
-		
+	BoxLayout:		
 	
 		Label:
 			text: "{} ({})".format(root.location[0], root.location[1])
@@ -92,7 +91,7 @@ WeatherRoot:
 	on_press: app.root.show_current_weather(self.location)
 
 <UnknownConditions@BoxLayout>:
-	conditions = ""
+	conditions: ""
 	canvas:
 		Color:
 			rgb: [0.2, 0.2, 0.2]
@@ -100,5 +99,5 @@ WeatherRoot:
 			pos: self.pos
 			size: self.size
 	Label:
-	text: root.conditions
+		text: root.conditions
 		
