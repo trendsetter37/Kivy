@@ -90,4 +90,15 @@ WeatherRoot:
 	height: "40dp"
 	size_hint_y: None
 	on_press: app.root.show_current_weather(self.location)
+
+<UnknownConditions@BoxLayout>:
+	conditions = ""
+	canvas:
+		Color:
+			rgb: [0.2, 0.2, 0.2]
+		Ellipse:
+			pos: self.pos
+			size: self.size
+	Label:
+	text: root.conditions
 		
