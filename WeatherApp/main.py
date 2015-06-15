@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.checkbox import CheckBox 
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty, StringProperty
 from kivy.network.urlrequest import UrlRequest 
+from kivy.factory import Factory
 import json
 from kivy.uix.listview import ListItemButton
 
@@ -77,10 +78,11 @@ class AddLocationForm(BoxLayout):
 
 class CurrentWeather(BoxLayout):
 	location = ListProperty(['New York', 'US'])
-	conditions = StringProperty()
+	conditions = ObjectProperty()
 	temp = NumericProperty()
 	hi_temp = NumericProperty()
 	low_temp = NumericProperty()
+
 	def update_weather(self):
 		weather_template = "http://api.openweathermap.org/data/2.5/"+\
 		"weather?q={},{}&units=metric&APPID=" + API_KEY
@@ -89,13 +91,19 @@ class CurrentWeather(BoxLayout):
 
 	def weather_retrieved(self, request, data):
 		data = json.loads(data.decode()) if not isinstance(data, dict) else data
-		self.conditions = data['weather'][0]['description']
+		#self.conditions = data['weather'][0]['description']
+		self.render_conditions(data['weather'][0]['description'])
 		self.temp = data['main']['temp']
 		self.hi_temp = data['main']['temp_max']
 		self.low_temp = data['main']['temp_min']
-		print(data)
+		print(data)		
 		print("temp: {}\nhi: {}\nlow: {}".format(self.temp, self.hi_temp, self.low_temp))
-
+	
+	def render_conditions(self, conditions_description):
+		conditions_widget = Factory.UnknownConditions()
+		conditions_widget.conditions = conditions_description
+		self.conditions.clear_widgets()	# references the BoxLayout with id: conditions
+		self.conditions.add_widget(conditions_widget)
 
 class WeatherApp(App):
 	pass

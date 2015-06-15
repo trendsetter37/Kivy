@@ -8,25 +8,20 @@ WeatherRoot:
 	AddLocationForm
 
 <AddLocationForm>: 
-
 	orientation: "vertical"
 	search_results: search_results_list
 	search_input: search_box # Use id and connect to property from main.py
 	check_box: ch_box
-
-
 	BoxLayout:
 		height: "40dp"
-		size_hint_y: None
-		
+		size_hint_y: None	
 		TextInput:
 			id: search_box 	# set id to be refenced elsewhere in kvlang file
 			size_hint_x: 50
 			multiline: False
 			focus: True
 			hint_text: "Enter a city"
-			on_text_validate: root.search_location()
-			
+			on_text_validate: root.search_location()			
 		BoxLayout:
 			orientation: "vertical"
 			size_hint_x: 10
@@ -35,8 +30,7 @@ WeatherRoot:
 							
 			CheckBox:
 				id: ch_box
-				active: False
-					
+				active: False					
 		Button:
 			text: "Search"
 			size_hint_x: 20
@@ -44,7 +38,6 @@ WeatherRoot:
 		Button:
 			text: "Current Location"
 			size_hint_x: 20
-
 	ListView:
 		id: search_results_list
 		adapter:
@@ -55,23 +48,17 @@ WeatherRoot:
 		size_hint_y: None
 		on_press: app.root.show_current_weather(None)
 
-<CurrentWeather>:
-	
+<CurrentWeather>:	
 	orientation: "vertical"
-	
-	BoxLayout:		
-	
+	conditions: conditions
+	BoxLayout:			
 		Label:
 			text: "{} ({})".format(root.location[0], root.location[1])
 			font_size: "30dp"
 		Label:
 			text: "{}".format(root.temp)
-	#Label:
-	#	text: root.conditions
 	BoxLayout:
 		id: conditions
-		UnknownConditions:
-			conditions: root.conditions
 	BoxLayout:
 		Label:
 			text: "Low: {}".format(root.low_temp)
