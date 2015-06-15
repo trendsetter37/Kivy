@@ -66,8 +66,12 @@ WeatherRoot:
 			font_size: "30dp"
 		Label:
 			text: "{}".format(root.temp)
-	Label:
-		text: root.conditions
+	#Label:
+	#	text: root.conditions
+	BoxLayout:
+		id: conditions
+		UnknownConditions:
+			conditions: root.conditions
 	BoxLayout:
 		Label:
 			text: "Low: {}".format(root.low_temp)
