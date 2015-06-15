@@ -80,7 +80,7 @@ WeatherRoot:
 	height: "40dp"
 	size_hint_y: None
 	on_press: app.root.show_current_weather(self.location)
-
+# Dynamic widgets below
 <UnknownConditions@BoxLayout>:
 	conditions: ""
 	canvas:
@@ -92,3 +92,47 @@ WeatherRoot:
 	Label:
 		text: root.conditions
 		
+<ClearConditions@BoxLayout>:
+	conditions: ""
+	canvas:
+		Color:
+			rgb: [0.8, 0.7, 0.3]
+		Line:
+			cap: "round"
+			width: 3
+			points:
+				[self.center_x - (self.height / 2)],
+				self.center_y,
+				self.center_x + (self.height / 2),
+				self.center_y]
+		Line:
+			cap: "round"
+			width: 3
+			points:
+				[self.center_x - (self.height / 2),
+				 self.center_y,
+				 self.center_x,
+				 self.center_y + (self.height / 2)]
+		Line:
+			cap: "round"
+			width: 3
+			points:
+				[self.center_x - (self.height * 0.35355),
+				self.center_y - (self.height * 0.35355),
+				self.center_x + (self.height * 0.35355),
+				self.center_y + (self.height * 0.35355)]
+		Line:
+			cap: "round"
+			width: 3
+			points:
+				[self.center_x - (self.height * 0.35355),
+				self.center_y + (self.height * 0.35355),
+				self.center_x + (self.height * 0.35355),
+				self.center_y - (self.height * 0.35355)]
+		Color:
+			rgb: [0.6, 0.5, 0.0]
+		Ellipse:
+			pos: self.center_x - ((self.height - 40) / 2), self.pos[1] + 20
+			size: [self.height - 40, self.height - 40]
+	Label:
+		text: root.conditions
