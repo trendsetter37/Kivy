@@ -108,6 +108,9 @@ class CurrentWeather(BoxLayout):
 		self.conditions.clear_widgets()	# references the BoxLayout with id: conditions
 		self.conditions.add_widget(conditions_widget)
 
+class Conditions(BoxLayout):
+	conditions = StringProperty()
+	
 class WeatherApp(App):
 	pass
 
