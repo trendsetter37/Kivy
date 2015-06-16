@@ -97,26 +97,30 @@ WeatherRoot:
 	canvas:
 		Color:
 			rgb: [0.8, 0.7, 0.3]
+		# Lines for the sun radixes
 		Line:
 			cap: "round"
 			width: 3
-			points:
-				[self.center_x - (self.height / 2)],
+			# Horizontal line
+			points: 
+				[self.center_x - (self.height / 2),
 				self.center_y,
 				self.center_x + (self.height / 2),
 				self.center_y]
 		Line:
 			cap: "round"
 			width: 3
-			points:
-				[self.center_x - (self.height / 2),
-				 self.center_y,
-				 self.center_x,
-				 self.center_y + (self.height / 2)]
+			# Vertical line
+			points: 
+				[self.center_x,
+				self.center_y - (self.height /2),
+				self.center_x,
+				self.center_y + (self.height / 2)]
 		Line:
 			cap: "round"
 			width: 3
-			points:
+			# 45 degree line (left leaning)
+			points: 
 				[self.center_x - (self.height * 0.35355),
 				self.center_y - (self.height * 0.35355),
 				self.center_x + (self.height * 0.35355),
@@ -124,7 +128,8 @@ WeatherRoot:
 		Line:
 			cap: "round"
 			width: 3
-			points:
+			# 45 degree line (right leaning)
+			points: 
 				[self.center_x - (self.height * 0.35355),
 				self.center_y + (self.height * 0.35355),
 				self.center_x + (self.height * 0.35355),

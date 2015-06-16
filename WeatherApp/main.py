@@ -100,7 +100,10 @@ class CurrentWeather(BoxLayout):
 		print("temp: {}\nhi: {}\nlow: {}".format(self.temp, self.hi_temp, self.low_temp))
 	
 	def render_conditions(self, conditions_description):
-		conditions_widget = Factory.UnknownConditions()
+		if "clear" in conditions_description.lower():
+			conditions_widget = Factory.ClearConditions()
+		else:
+			conditions_widget = Factory.UnknownConditions()
 		conditions_widget.conditions = conditions_description
 		self.conditions.clear_widgets()	# references the BoxLayout with id: conditions
 		self.conditions.add_widget(conditions_widget)
