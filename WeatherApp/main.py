@@ -1,4 +1,7 @@
+
 from __future__ import print_function
+
+import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout 
 from kivy.uix.checkbox import CheckBox 
@@ -7,6 +10,9 @@ from kivy.network.urlrequest import UrlRequest
 from kivy.factory import Factory
 import json
 from kivy.uix.listview import ListItemButton
+import random
+from kivy.graphics import Color, Ellipse
+from kivy.clock import Clock
 
 
 API_KEY = "ebdb10f67989131d05caadb1d21f7754"	# You should get your own
@@ -102,6 +108,8 @@ class CurrentWeather(BoxLayout):
 	def render_conditions(self, conditions_description):
 		if "clear" in conditions_description.lower():
 			conditions_widget = Factory.ClearConditions()
+		elif "snow" in conditions_description.lower():
+			conditions_widget = Factory.SnowConditions()
 		else:
 			conditions_widget = Factory.UnknownConditions()
 		conditions_widget.conditions = conditions_description
@@ -110,7 +118,39 @@ class CurrentWeather(BoxLayout):
 
 class Conditions(BoxLayout):
 	conditions = StringProperty()
-	
+
+class SnowConditions(Conditions):
+	FLAKE_SIZE = 5
+	NUM_FLAKES = 60
+	FLAKE_AREA = FLAKE_SIZE * NUM_FLAKES
+	FLAKE_INTERVAL = 1.0 / 30.0 # Update twice a second
+
+	def __init__(self, **kwargs):
+		super(SnowConditions, self).__init__(**kwargs)
+		self.flakes = [[x * self.FLAKE_SIZE, 0]
+			for x in range(self.NUM_FLAKES)]
+		Clock.schedule_interval(self.update_flakes, self.FLAKE_INTERVAL)
+
+	def update_flakes(self, time):
+		for f in self.flakes:
+			f[0] += random.choice([-1,1])
+			f[1] -= random.randint(0, self.FLAKE_SIZE)
+			if f[1] <= 0:
+				f[1] = random.randint(0, int(self.height))
+
+		self.canvas.before.clear()
+		with self.canvas.before:
+			widget_x = self.center_x - self.FLAKE_AREA / 2
+			widget_y = self.pos[1]
+			for x_flake, y_flake in self.flakes:
+				x = widget_x + x_flake
+				y = widget_y + y_flake
+				Color(0.9, 0.9, 1.0)
+				Ellipse(pos=(x,y), size=(self.FLAKE_SIZE, self.FLAKE_SIZE))
+
+
+
+
 class WeatherApp(App):
 	pass
 
