@@ -44,6 +44,10 @@ WeatherRoot:
 		Button:
 			text: "Current Location"
 			size_hint_x: 20
+		Button:
+			text: "Settings"
+			size_hint_x: 20
+			on_press: app.open_settings()
 
 	ListView:
 		id: search_results_list
